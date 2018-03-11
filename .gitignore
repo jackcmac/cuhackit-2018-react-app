@@ -12,6 +12,9 @@
 #credentials
 /credentials
 
+#awsconfig
+/src/awsConfig
+
 # misc
 .DS_Store
 .env.local
