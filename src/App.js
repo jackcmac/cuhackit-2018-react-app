@@ -15,20 +15,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.fileName;
+
+    this.reader = new FileReader();
     this.recognize = this.recognize.bind(this);
     this.getBinary = this.getBinary.bind(this);
     this.encodeImageFileAsURL = this.encodeImageFileAsURL.bind(this);
   }
 
-  recognize(reader) {
+  recognize() {
     console.log('print dum dum');
-    console.log(this.fileName);
+    console.log(this.reader.result);
 
     let rekognition = new AWS.Rekognition();
     let textDetectionPromise = rekognition.detectText(
       {
         Image: {
-          Bytes: this.getBinary(reader.result)
+          Bytes: this.getBinary(this.reader.result)
         }
       }
     ).promise()
@@ -85,20 +87,8 @@ class App extends Component {
 
   handleChange(selectorFiles) {
     let file = selectorFiles[0];
-    let reader = new FileReader();
 
-    reader.readAsDataURL(file);
-    this.recognize(reader);
-  }
-
-  performClick(elemId) {
-    var elem = document.getElementById(elemId);
-    this.fileName = elem.value
-    if (elem && document.createEvent) {
-      var evt = document.createEvent("MouseEvents");
-      evt.initEvent("click", true, false);
-      elem.dispatchEvent(evt);
-    }
+    this.reader.readAsDataURL(file);
   }
 
   render() {
@@ -114,7 +104,7 @@ class App extends Component {
         {/*<a type="button" onClick={this.performClick('theFile')} className="btn btn-danger btn-block">UPLOAD</a>
         <a type="file" ></a> */}
         <input type="file" id="inputFileToLoad" onChange={(e) => this.handleChange(e.target.files)} />
-        <input id="inputFileToLoad" type="file" />
+        {/*<input id="inputFileToLoad" type="file" />*/}
         <div id="imgTest"></div>
         <a type="button" onClick={this.recognize} className="btn btn-success btn-block">PROCESS</a>
       </div>
