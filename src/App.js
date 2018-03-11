@@ -5,9 +5,9 @@ var AWS = require('aws-sdk');
 AWS.config = new AWS.Config();
 //var creds = new AWS.FileSystemCredentials('./configuration.json');
 AWS.config.update({
-  "accessKeyId": "AKIAJZPFBAC6NYBKXALA",
-  "secretAccessKey": "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",
-  "region": "us-east-1"
+  "accessKeyId": "AKIAJP3GHCFQ53SZ4G2Q",
+  "secretAccessKey": "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",
+  "region": "us-east-2"
 });
 AWS.config.update({ region: 'us-east-1' });
 
@@ -19,7 +19,6 @@ class App extends Component {
     this.reader = new FileReader();
     this.recognize = this.recognize.bind(this);
     this.getBinary = this.getBinary.bind(this);
-    this.encodeImageFileAsURL = this.encodeImageFileAsURL.bind(this);
   }
 
   recognize() {
@@ -38,6 +37,8 @@ class App extends Component {
     textDetectionPromise
       .then((data) => {
         console.log(data);
+
+
       }).catch((error) => {
         console.log(error);
       });
@@ -60,31 +61,6 @@ class App extends Component {
     return ab;
   }
 
-  encodeImageFileAsURL() {
-    //console.log(selectorFiles);
-    //this.fileName = selectorFiles[0];
-
-    var filesSelected = document.getElementById("inputFileToLoad").files;
-    if (filesSelected.length > 0) {
-      var fileToLoad = filesSelected[0];
-
-      var fileReader = new FileReader();
-
-      fileReader.onload = function (fileLoadedEvent) {
-        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-        var newImage = document.createElement('img');
-        newImage.src = srcData;
-
-        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-        //alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
-        //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
-      }
-      fileReader.readAsDataURL(fileToLoad);
-      this.fileName = fileReader.result;
-    }
-  }
-
   handleChange(selectorFiles) {
     let file = selectorFiles[0];
 
@@ -101,10 +77,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        {/*<a type="button" onClick={this.performClick('theFile')} className="btn btn-danger btn-block">UPLOAD</a>
-        <a type="file" ></a> */}
         <input type="file" id="inputFileToLoad" onChange={(e) => this.handleChange(e.target.files)} />
-        {/*<input id="inputFileToLoad" type="file" />*/}
         <div id="imgTest"></div>
         <a type="button" onClick={this.recognize} className="btn btn-success btn-block">PROCESS</a>
       </div>
