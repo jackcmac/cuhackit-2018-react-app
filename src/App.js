@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './scribble.png';
 import './App.css';
 import creds from './awsConfig.json';
 var AWS = require('aws-sdk');
@@ -71,16 +71,19 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <img src={logo} className="App-logo" alt="scribble" />
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <input type="file" id="inputFileToLoad" onChange={(e) => this.handleChange(e.target.files)} />
-        <div id="imgTest"></div>
-        <a type="button" onClick={this.recognize} className="btn btn-success btn-block">PROCESS</a>
-      </div>
+        <div class="col-6 col-sm-offset-5">
+          <p><input value="Upload File" type="file" id="inputFileToLoad" onChange={(e) => this.handleChange(e.target.files)} /></p>
+        </div>
+
+          <div id="imgTest">
+  
+          </div>
+          <div class=".Process">
+            <a type="button" onClick={this.recognize} className="btn btn-success">PROCESS</a>
+          </div>
+        </div>
     );
   }
 }
