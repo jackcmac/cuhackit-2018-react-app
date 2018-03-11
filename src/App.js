@@ -9,7 +9,6 @@ AWS.config.update(creds);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.fileName;
 
     this.reader = new FileReader();
     this.recognize = this.recognize.bind(this);
@@ -31,13 +30,17 @@ class App extends Component {
 
     textDetectionPromise
       .then((data) => {
-        console.log(data);
         var newData = [];
-        data.forEach(function (entry) {
-          if (entry.Type == "LINE") {
-            //newData.append
+        data.TextDetections.forEach(function (entry) {
+          if (entry.Type === "LINE") {
+            newData.push(entry.DetectedText);
           }
         })
+        console.log(newData);
+
+        /*
+          newData is the list of strings separated by lines
+        */
 
       }).catch((error) => {
         console.log(error);
@@ -53,10 +56,6 @@ class App extends Component {
     for (var i = 0; i < length; i++) {
       ua[i] = binaryImg.charCodeAt(i);
     }
-
-    var blob = new Blob([ab], {
-      type: "image/jpeg"
-    });
 
     return ab;
   }
