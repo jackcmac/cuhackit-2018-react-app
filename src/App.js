@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import creds from './awsConfig.json';
+
 var AWS = require('aws-sdk');
 AWS.config = new AWS.Config();
 AWS.config.update(creds);
@@ -16,9 +17,6 @@ class App extends Component {
   }
 
   recognize() {
-    console.log('print dum dum');
-    console.log(this.reader.result);
-
     let rekognition = new AWS.Rekognition();
     let textDetectionPromise = rekognition.detectText(
       {
@@ -31,9 +29,11 @@ class App extends Component {
     textDetectionPromise
       .then((data) => {
         var newData = [];
+        var finalStr = "";
         data.TextDetections.forEach(function (entry) {
           if (entry.Type === "LINE") {
             newData.push(entry.DetectedText);
+            finalStr += entry.DetectedText + " \n";
           }
         })
         console.log(newData);
@@ -41,6 +41,8 @@ class App extends Component {
         /*
           newData is the list of strings separated by lines
         */
+
+        alert(finalStr);
 
       }).catch((error) => {
         console.log(error);
