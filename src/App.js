@@ -4,12 +4,7 @@ import './App.css';
 var AWS = require('aws-sdk');
 AWS.config = new AWS.Config();
 //var creds = new AWS.FileSystemCredentials('./configuration.json');
-AWS.config.update({
-  "accessKeyId": "AKIAJP3GHCFQ53SZ4G2Q",
-  "secretAccessKey": "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",
-  "region": "us-east-2"
-});
-AWS.config.update({ region: 'us-east-1' });
+AWS.config.update();///put stuff here);
 
 class App extends Component {
   constructor(props) {
@@ -37,7 +32,12 @@ class App extends Component {
     textDetectionPromise
       .then((data) => {
         console.log(data);
-
+        var newData = [];
+        data.forEach(function (entry) {
+          if (entry.Type == "LINE") {
+            //newData.append
+          }
+        })
 
       }).catch((error) => {
         console.log(error);
