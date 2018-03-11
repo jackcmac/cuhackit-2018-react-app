@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import creds from './awsConfig.json';
 var AWS = require('aws-sdk');
 AWS.config = new AWS.Config();
-//var creds = new AWS.FileSystemCredentials('./configuration.json');
-AWS.config.update();///put stuff here);
+AWS.config.update(creds);
 
 class App extends Component {
   constructor(props) {
